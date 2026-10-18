@@ -1,0 +1,49 @@
+---
+title: Konfigurasi
+description: Pengaturan forgels.toml, level log, dan remapping Foundry
+---
+
+Konfigurasi bersifat opsional. Tanpa file apa pun, ForgeLS berjalan dengan bawaan dan tidak mencetak peringatan.
+
+## forgels.toml
+
+Letakkan `forgels.toml` opsional di samping working directory tempat binary dijalankan:
+
+```toml
+publish_delay_ms = 200
+log_level = "warn"
+```
+
+| Kunci | Bawaan | Arti |
+| --- | ------- | ---- |
+| `publish_delay_ms` | `200` | Jeda tenang setelah ketikan terakhir sebelum diagnostics terbit |
+| `log_level` | `"warn"` | Salah satu dari `error`, `warn`, `info`, `debug`, `trace` |
+| `root` | none | Root workspace bawaan saat editor tidak mengirimkan |
+| `remappings` | `[]` | Remapping prefix dalam bentuk `prefix=target` ala Foundry |
+
+File yang hilang berarti bawaan tanpa peringatan. File rusak memakai bawaan dan mencetak satu peringatan `forgels: ...` per masalah ke stderr. Kunci valid di file rusak tetap berlaku.
+
+## Flag CLI
+
+```sh
+forgels --log-level debug
+```
+
+Flag `--log-level <error|warn|info|debug|trace>` menang atas isi file.
+
+## Remapping Foundry
+
+ForgeLS juga membaca `foundry.toml` di working directory:
+
+- `remappings` eksplisit menang jika ada.
+- Jika tidak ada, dep `src` yang dikenal (`forge-std`, `ds-test`) diarahkan ke `lib/<name>/src/` bila folder itu ada.
+- Selain itu tiap subfolder dari setiap dir `libs` menjadi `name/=lib/name/`.
+
+Remapping eksplisit `forgels.toml` selalu menang atas fallback Foundry.
+
+## Checklist editor
+
+- Command: `forgels`
+- Transport: stdio
+- Language id: `solidity`, pola file `*.sol`
+- Multi-root workspace didukung; file yang root-nya dihapus akan dikeluarkan

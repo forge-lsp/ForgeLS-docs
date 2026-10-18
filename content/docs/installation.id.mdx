@@ -1,0 +1,42 @@
+---
+title: Instalasi
+description: Instal binary forgels dengan Cargo
+---
+
+Butuh Rust stable dengan Cargo terinstal.
+
+## Instal
+
+```sh
+cargo install --path crates/forgels
+```
+
+Jalankan dari source tanpa menginstal:
+
+```sh
+cargo run -p forgels
+```
+
+## Hubungkan editor
+
+Server berbicara JSON-RPC lewat stdio. Arahkan klien LSP generik apa pun ke binary `forgels`:
+
+- Transport: `stdio`
+- Language id: `solidity` untuk file `.sol`
+- Command: `forgels`
+
+Tidak perlu plugin khusus editor. Jika editor meminta language id atau pola file, pakai `solidity` dan `*.sol`.
+
+## Verifikasi
+
+1. Buka folder yang berisi file `.sol`.
+2. Buka file tersebut di editor.
+3. Sengaja rusak sesuatu, misalnya hapus titik koma.
+4. Diagnostic akan muncul dalam ~200 ms (debounce bawaan).
+
+Jika tidak terjadi apa-apa, jalankan `forgels` di terminal. Startup tercatat ke stderr, dan masalah config tercetak sebagai peringatan `forgels: ...` di sana.
+
+## Langkah berikutnya
+
+- [Mulai cepat](/docs/quickstart): pastikan hover, completion, dan goto-definition berfungsi
+- [Konfigurasi](/docs/configuration): pengaturan `forgels.toml` opsional

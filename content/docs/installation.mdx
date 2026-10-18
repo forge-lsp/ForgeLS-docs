@@ -1,0 +1,42 @@
+---
+title: Installation
+description: Install the forgels binary with Cargo
+---
+
+Requires Rust stable with Cargo installed.
+
+## Install
+
+```sh
+cargo install --path crates/forgels
+```
+
+Run from source without installing:
+
+```sh
+cargo run -p forgels
+```
+
+## Connect your editor
+
+The server speaks JSON-RPC over stdio. Point any generic LSP client at the `forgels` binary:
+
+- Transport: `stdio`
+- Language id: `solidity` for `.sol` files
+- Command: `forgels`
+
+No editor-specific plugin is needed. If your editor asks for a language id or file pattern, use `solidity` and `*.sol`.
+
+## Verify
+
+1. Open a folder containing a `.sol` file.
+2. Open the file in your editor.
+3. Break something on purpose, for example delete a semicolon.
+4. A diagnostic should appear within ~200 ms (the default debounce delay).
+
+If nothing happens, run `forgels` in a terminal. It logs startup to stderr, and config problems print as `forgels: ...` warnings there.
+
+## Next steps
+
+- [Quickstart](/docs/quickstart): confirm hover, completion, and goto-definition work
+- [Configuration](/docs/configuration): optional `forgels.toml` settings

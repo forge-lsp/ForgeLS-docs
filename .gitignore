@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# next
+.next/
+out/
+
+# fumadocs mdx output
+.source/
+
+# env
+.env
+.env*.local
+
+# typescript
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# system
+.DS_Store

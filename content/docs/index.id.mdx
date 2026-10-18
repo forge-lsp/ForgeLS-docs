@@ -1,0 +1,41 @@
+---
+title: Apa itu ForgeLS
+description: Language server untuk bahasa smart contract
+---
+
+ForgeLS adalah server Language Server Protocol (LSP) untuk bahasa smart contract. Berjalan lewat stdio, sehingga editor apa pun yang mendukung LSP bisa memakainya. Tidak perlu plugin editor khusus selain klien LSP generik.
+
+## Status
+
+- Versi: `0.2.0-beta`
+- Solidity: didukung dalam beta (lexer, parser, dan analysis)
+- Noir: stub lexer dan parser, grammar penuh masih direncanakan
+- Cairo: direncanakan
+
+## Yang kamu dapat untuk Solidity
+
+- Diagnostics dengan publish debounce, dibersihkan saat file ditutup
+- Hover, completion, dan goto-definition, termasuk lintas file import
+- Document symbols, references, rename, inlay hints, dan semantic tokens
+- Call hierarchy, type hierarchy, code actions, folding, dan selection ranges
+- Multi-root workspace dengan dukungan remapping Foundry
+
+## Cara membangunnya
+
+ForgeLS ditulis dalam Rust sebagai monorepo workspace dengan crate kecil yang fokus:
+
+- `forgels`: binary server tipis, merutekan file ke crate bahasa
+- `forgels-core`: lifecycle server, workspace manager, config, hub diagnostics
+- `forgels-protocol`: hanya tipe LSP dan JSON-RPC
+- `forgels-syntax`: toolkit AST, lexer, dan parser bersama untuk semua bahasa
+- `forgels-common`: helper fs, path, logging, dan http bersama
+- `forgels-lang-solidity`, `forgels-lang-noir`: satu crate mandiri per bahasa
+- `forgels-lint`: aturan lint bersama antar bahasa
+
+Crate bahasa tidak pernah saling bergantung. Crate bersama tidak pernah bergantung ke crate bahasa.
+
+## Langkah berikutnya
+
+- [Instalasi](/docs/installation): instal binary dengan Cargo
+- [Mulai cepat](/docs/quickstart): buka file Solidity dan pastikan berfungsi
+- [Konfigurasi](/docs/configuration): atur diagnostics, log, dan remapping

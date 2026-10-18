@@ -1,0 +1,58 @@
+---
+title: Quickstart
+description: Open a Solidity file and verify the language features
+---
+
+This guide assumes [Installation](/docs/installation) is done and your editor points at `forgels` over stdio.
+
+## 1. Create a test file
+
+Save this as `Counter.sol` in an empty folder:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Counter {
+    uint256 public total;
+
+    function add(uint256 amount) public {
+        total += amount;
+    }
+}
+```
+
+Open the folder in your editor, then open `Counter.sol`.
+
+## 2. Check diagnostics
+
+Delete the semicolon after `total += amount` and wait a moment. You should see an error diagnostic on that line. Undo the edit and confirm the diagnostic clears.
+
+Diagnostics are debounced (200 ms by default) and cleared when the file closes.
+
+## 3. Check hover and goto-definition
+
+- Hover over `total` inside `add`. You should see its type and declaration info.
+- Put the cursor on `total` and trigger goto-definition. The cursor should jump to the state variable declaration.
+
+## 4. Check completion
+
+Type `total.` or start typing a known identifier and trigger completion. Contract members, in-scope symbols, and imported symbols (for multi-file projects) are suggested.
+
+## 5. Try a multi-file project
+
+Create a second file `Wrapper.sol` importing the first one:
+
+```solidity
+import "./Counter.sol";
+
+contract Wrapper {
+    Counter public counter;
+}
+```
+
+Hover and goto-definition on `Counter` resolve across files. ForgeLS rebuilds its project index on open and change, and refreshes dependents when an import target edits.
+
+## What to read next
+
+- [Configuration](/docs/configuration): debounce delay, log levels, Foundry remappings

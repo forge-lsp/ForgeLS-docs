@@ -1,0 +1,41 @@
+---
+title: What is ForgeLS
+description: A language server for smart contract languages
+---
+
+ForgeLS is a Language Server Protocol (LSP) server for smart contract languages. It runs over stdio, so any LSP-capable editor can use it. No editor plugin is required beyond a generic LSP client.
+
+## Status
+
+- Version: `0.2.0-beta`
+- Solidity: supported in beta (lexer, parser, and analysis)
+- Noir: stub lexer and parser, real grammar is planned
+- Cairo: planned
+
+## What you get for Solidity
+
+- Diagnostics with debounced publish, cleared on file close
+- Hover, completion, and goto-definition, including cross-file imports
+- Document symbols, references, rename, inlay hints, and semantic tokens
+- Call hierarchy, type hierarchy, code actions, folding, and selection ranges
+- Multi-root workspaces with Foundry remapping support
+
+## How it is built
+
+ForgeLS is written in Rust as a workspace monorepo with small focused crates:
+
+- `forgels`: thin server binary, routes files to language crates
+- `forgels-core`: server lifecycle, workspace manager, config, diagnostics hub
+- `forgels-protocol`: LSP and JSON-RPC types only
+- `forgels-syntax`: shared AST, lexer, and parser toolkit for all languages
+- `forgels-common`: shared fs, path, logging, and http helpers
+- `forgels-lang-solidity`, `forgels-lang-noir`: one self-contained crate per language
+- `forgels-lint`: lint rules shared across languages
+
+Language crates never depend on each other. Shared crates never depend on language crates.
+
+## Next steps
+
+- [Installation](/docs/installation): install the binary with Cargo
+- [Quickstart](/docs/quickstart): open a Solidity file and verify it works
+- [Configuration](/docs/configuration): tune diagnostics, logs, and remappings

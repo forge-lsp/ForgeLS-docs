@@ -1,0 +1,49 @@
+---
+title: Configuration
+description: forgels.toml settings, log levels, and Foundry remappings
+---
+
+Configuration is optional. Without any file, ForgeLS runs with defaults and prints no warnings.
+
+## forgels.toml
+
+Place an optional `forgels.toml` next to the working directory the binary starts in:
+
+```toml
+publish_delay_ms = 200
+log_level = "warn"
+```
+
+| Key | Default | Meaning |
+| --- | ------- | ------- |
+| `publish_delay_ms` | `200` | Quiet period after the last keystroke before diagnostics publish |
+| `log_level` | `"warn"` | One of `error`, `warn`, `info`, `debug`, `trace` |
+| `root` | none | Default workspace root when the editor sends none |
+| `remappings` | `[]` | Prefix remappings in Foundry `prefix=target` form |
+
+Missing files mean defaults with no warnings. Broken files fall back to defaults and print one `forgels: ...` warning per problem to stderr. Valid keys in a broken file still apply.
+
+## CLI flag
+
+```sh
+forgels --log-level debug
+```
+
+The `--log-level <error|warn|info|debug|trace>` flag wins over the file.
+
+## Foundry remappings
+
+ForgeLS also reads `foundry.toml` in the working directory:
+
+- Explicit `remappings` win when present.
+- When absent, known `src` deps (`forge-std`, `ds-test`) resolve to `lib/<name>/src/` if that folder exists.
+- Otherwise each subfolder of every `libs` dir becomes `name/=lib/name/`.
+
+Explicit `forgels.toml` remappings always win over the Foundry fallback.
+
+## Editor checklist
+
+- Command: `forgels`
+- Transport: stdio
+- Language id: `solidity`, file pattern `*.sol`
+- Multi-root workspaces are supported; files whose root is removed are evicted

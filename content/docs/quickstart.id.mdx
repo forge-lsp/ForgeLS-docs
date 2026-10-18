@@ -1,0 +1,58 @@
+---
+title: Mulai cepat
+description: Buka file Solidity dan verifikasi fitur bahasa
+---
+
+Panduan ini menganggap [Instalasi](/docs/installation) sudah selesai dan editor mengarah ke `forgels` lewat stdio.
+
+## 1. Buat file uji
+
+Simpan ini sebagai `Counter.sol` di folder kosong:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract Counter {
+    uint256 public total;
+
+    function add(uint256 amount) public {
+        total += amount;
+    }
+}
+```
+
+Buka folder di editor, lalu buka `Counter.sol`.
+
+## 2. Cek diagnostics
+
+Hapus titik koma setelah `total += amount` dan tunggu sebentar. Diagnostic error akan muncul di baris itu. Batalkan edit dan pastikan diagnostic hilang.
+
+Diagnostics memakai debounce (bawaan 200 ms) dan dibersihkan saat file ditutup.
+
+## 3. Cek hover dan goto-definition
+
+- Arahkan kursor (hover) ke `total` di dalam `add`. Info tipe dan deklarasi akan tampil.
+- Letakkan kursor di `total` lalu picu goto-definition. Kursor akan lompat ke deklarasi state variable.
+
+## 4. Cek completion
+
+Ketik `total.` atau mulai ketik identifier yang dikenal lalu picu completion. Member contract, simbol dalam scope, dan simbol import (untuk proyek multi-file) akan disarankan.
+
+## 5. Coba proyek multi-file
+
+Buat file yang mengimpor file lain:
+
+```solidity
+import "./Counter.sol";
+
+contract Wrapper {
+    Counter public counter;
+}
+```
+
+Hover dan goto-definition pada `Counter` terpecahkan lintas file. ForgeLS membangun ulang indeks proyek saat file dibuka dan diubah, serta me-refresh file dependen saat target import diedit.
+
+## Bacaan berikutnya
+
+- [Konfigurasi](/docs/configuration): jeda debounce, level log, remapping Foundry

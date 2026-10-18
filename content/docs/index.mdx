@@ -24,7 +24,7 @@ ForgeLS is a Language Server Protocol (LSP) server for smart contract languages.
 
 ForgeLS is written in Rust as a workspace monorepo with small focused crates:
 
-- `forgels`: thin server binary, routes files to language crates
+- `fls`: thin binary entrypoint (`lsp` server plus `check` linter)
 - `forgels-core`: server lifecycle, workspace manager, config, diagnostics hub
 - `forgels-protocol`: LSP and JSON-RPC types only
 - `forgels-syntax`: shared AST, lexer, and parser toolkit for all languages
@@ -39,3 +39,5 @@ Language crates never depend on each other. Shared crates never depend on langua
 - [Installation](/docs/installation): install the binary with Cargo
 - [Quickstart](/docs/quickstart): open a Solidity file and verify it works
 - [Configuration](/docs/configuration): tune diagnostics, logs, and remappings
+- [CLI reference](/docs/cli): lint from the terminal with `fls check`
+- [Architecture](/docs/architecture): how the crates fit together

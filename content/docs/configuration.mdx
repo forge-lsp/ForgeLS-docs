@@ -21,12 +21,28 @@ log_level = "warn"
 | `root` | none | Default workspace root when the editor sends none |
 | `remappings` | `[]` | Prefix remappings in Foundry `prefix=target` form |
 
-Missing files mean defaults with no warnings. Broken files fall back to defaults and print one `forgels: ...` warning per problem to stderr. Valid keys in a broken file still apply.
+Missing files mean defaults with no warnings. Broken files fall back to defaults and print one `fls: ...` warning per problem to stderr. Valid keys in a broken file still apply.
+
+## Lint rules
+
+Per-rule levels live under `[lint.rules]`. Each value is `off`, `warn`, or `err`:
+
+```toml
+[lint.rules]
+"correctness/unused" = "warn"
+"correctness/parse-error" = "off"
+```
+
+- `off` drops the diagnostic.
+- `warn` reports at Warning severity.
+- `err` reports at Error severity (the default for every rule).
+
+Unknown rule IDs fail with `fls: unknown lint rule: ...` and exit code 2. Bad level strings fall back with a warning. See [Rules](/docs/rules) for the full list of 22 rule IDs.
 
 ## CLI flag
 
 ```sh
-forgels --log-level debug
+fls lsp --log-level debug
 ```
 
 The `--log-level <error|warn|info|debug|trace>` flag wins over the file.
@@ -43,7 +59,7 @@ Explicit `forgels.toml` remappings always win over the Foundry fallback.
 
 ## Editor checklist
 
-- Command: `forgels`
+- Command: `fls lsp`
 - Transport: stdio
 - Language id: `solidity`, file pattern `*.sol`
 - Multi-root workspaces are supported; files whose root is removed are evicted

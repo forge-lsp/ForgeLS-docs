@@ -1,0 +1,50 @@
+---
+title: CLI reference
+description: fls lsp and fls check commands, flags, and exit codes
+---
+
+The `fls` binary is the ForgeLS entrypoint: an LSP server plus a check linter. Every invocation is one of two subcommands.
+
+```sh
+fls lsp [--log-level LEVEL]
+fls check [PATH...] [--write] [--json]
+```
+
+## fls lsp
+
+Runs the LSP server on stdio with Solidity wired in.
+
+| Flag | Values | Meaning |
+| ---- | ------ | ------- |
+| `--log-level LEVEL` | `trace`, `debug`, `info`, `warn`, `error` | Log verbosity. The flag wins over `forgels.toml`. |
+
+Point a generic LSP client at `fls lsp` with language id `solidity` for `.sol` files.
+
+## fls check
+
+Lints Solidity files without an editor.
+
+| Flag | Meaning |
+| ---- | ------- |
+| `[PATH...]` | Files or dirs to lint. Empty scans the working directory recursively for `*.sol`. |
+| `--write` | Apply safe fixes in place. Only safe applicability applies. |
+| `--json` | Emit the engine JSON report as-is, with 0-based ranges, fix, fixed, and summary. |
+
+Output is sorted and deduped. Import resolution uses the working directory or the config root.
+
+## Exit codes
+
+| Code | Meaning |
+| ---- | ------- |
+| `0` | Clean or warnings only. |
+| `1` | Any error diagnostic. |
+| `2` | Operational failure: unreadable file, bad write, or unknown rule. |
+
+## Config
+
+`check` loads `forgels.toml` next to the working directory, like the server. A missing file means defaults. Broken TOML means defaults plus a stderr warning. Unknown rule IDs fail with exit 2. Bad levels fall back with a warning.
+
+## Limits
+
+- Single-file analysis: dep-aware rules run without tracked deps.
+- V1 is Solidity only. Noir stays out to keep the binary small.

@@ -1,4 +1,4 @@
 {
   "title": "ForgeLS",
-  "pages": ["index", "installation", "quickstart", "configuration"]
+  "pages": ["index", "installation", "quickstart", "configuration", "cli", "rules", "architecture"]
 }

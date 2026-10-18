@@ -16,23 +16,6 @@
   --color-fd-primary: #1d4ed8;
   --color-fd-primary-foreground: #ffffff;
   --color-fd-ring: #3b82f6;
-  --color-fd-accent: rgba(59, 130, 246, 0.12);
+  --color-fd-accent: rgba(29, 78, 216, 0.08);
   --color-fd-accent-foreground: #1e3a8a;
-}
-
-.dark {
-  --color-fd-background: hsl(222, 47%, 6%);
-  --color-fd-foreground: hsl(213, 31%, 91%);
-  --color-fd-muted: hsl(222, 40%, 11%);
-  --color-fd-popover: hsl(222, 45%, 9%);
-  --color-fd-card: hsl(222, 45%, 8%);
-  --color-fd-card-foreground: hsl(213, 31%, 96%);
-  --color-fd-border: hsla(213, 60%, 60%, 22%);
-  --color-fd-primary: #60a5fa;
-  --color-fd-primary-foreground: #0b1526;
-  --color-fd-secondary: hsl(222, 40%, 13%);
-  --color-fd-secondary-foreground: hsl(213, 31%, 91%);
-  --color-fd-accent: rgba(59, 130, 246, 0.18);
-  --color-fd-accent-foreground: #bfdbfe;
-  --color-fd-ring: #3b82f6;
 }

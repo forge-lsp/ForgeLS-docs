@@ -17,5 +17,7 @@ export function baseOptions(locale: string = i18n.defaultLanguage): BaseLayoutPr
       url: `/${locale}`,
     },
     githubUrl: 'https://github.com/forge-lsp/ForgeLS',
+    // light mode only: no theme switch
+    themeSwitch: { enabled: false },
   };
 }

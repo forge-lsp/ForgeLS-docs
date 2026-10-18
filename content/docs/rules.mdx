@@ -1,0 +1,43 @@
+---
+title: Lint rules
+description: The 22 correctness rule IDs, levels, and severities
+---
+
+Every diagnostic ForgeLS produces carries a stable rule ID. IDs have the form `correctness/<name>`. Rules report at Error severity unless set otherwise in [Configuration](/docs/configuration) under `[lint.rules]` with `off`, `warn`, or `err`.
+
+## Rules
+
+| Rule ID | What it checks |
+| ------- | -------------- |
+| `correctness/parse-error` | Syntax errors with span and message |
+| `correctness/call-arity` | Plain and member call argument counts, including getters |
+| `correctness/struct-arity` | Struct constructor argument counts |
+| `correctness/error-arity` | `revert Name(args)` argument counts |
+| `correctness/deploy-arity` | `new C(args)` constructor argument counts |
+| `correctness/emit-arity` | `emit Event(args)` argument counts |
+| `correctness/builtin-arity` | Global function arity (`keccak256`, `ecrecover`, `addmod`, and rest) |
+| `correctness/call-options` | Unknown call options; `salt` only allowed on `new` |
+| `correctness/unresolved-identifier` | Unknown identifiers |
+| `correctness/unresolved-import` | Imports that resolve to nothing |
+| `correctness/unresolved-event` | Unknown event names in `emit` |
+| `correctness/visibility` | External/private/internal call violations |
+| `correctness/mutability` | State reads in `pure`, writes in `pure` and `view` |
+| `correctness/payable-value` | `value` option on non-payable targets |
+| `correctness/type-mismatch` | Literal and builtin-shape assignments against the declared type |
+| `correctness/shadowing` | Inner params and locals shadowing outer declarations |
+| `correctness/unused` | Unused params, locals, and named imports |
+| `correctness/data-location` | Missing or forbidden `memory`, `storage`, `calldata` |
+| `correctness/override` | Missing, dangling, or non-virtual `override` on functions |
+| `correctness/interface-rules` | State variables and constructors in interfaces |
+| `correctness/indexed-limit` | More than 3 indexed params on non-anonymous events |
+| `correctness/inconsistent-inheritance` | Hierarchies that fail C3 linearization (falls back to DFS) |
+
+## Severity
+
+| Level | Effect |
+| ----- | ------ |
+| `err` | Reports at Error severity. Blocks `fls check` with exit code 1. |
+| `warn` | Reports at Warning severity. `fls check` still exits 0. |
+| `off` | The runner drops the diagnostic. |
+
+Shadowing, unused variables, and data location reports are Error in V1. The Solidity compiler treats some of these as warnings; the stricter V1 behavior is intentional and documented per rule in the source analysis modules.

@@ -17,7 +17,7 @@ export default async function Layout({
   return (
     <RootProvider
       i18n={i18nProvider(translations, lang)}
-      theme={{ defaultTheme: 'dark' }}
+      theme={{ forcedTheme: 'light' }}
     >
       <div className="flex flex-col min-h-screen">{children}</div>
     </RootProvider>

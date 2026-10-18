@@ -1,0 +1,35 @@
+---
+title: Architecture
+description: Why ForgeLS is split into small crates and how they fit together
+---
+
+ForgeLS is a Rust workspace of small focused crates. The split is by function first and by language second: shared code stays reusable, language code stays independent. No language crate may depend on another, and no shared crate may depend on a language crate.
+
+## Crate layout
+
+- `fls`: thin binary entrypoint. Parses CLI args (`lsp`, `check`) and routes to the core server or the lint runner. Holds almost no logic.
+- `forgels-core`: orchestration across languages. Owns the server lifecycle, workspace manager, config loading, diagnostics hub, and the cross-file project index.
+- `forgels-protocol`: LSP and JSON-RPC types only (`Position`, `Range`, `Diagnostic`, `Request`, `Response`). No analysis, no heavy dependencies.
+- `forgels-syntax`: reusable syntax foundation for every language. Provides `Span`, `Token`, the `Lexer` and `Parser` traits, untyped `SyntaxNode` trees, typed `AstNode` wrappers, `Visitor`, and `ParseError`. Language agnostic by rule: no Solidity or Noir grammar here.
+- `forgels-common`: small helpers any crate may use: fs, paths, logging, http.
+- `forgels-lang-solidity`: Solidity only: lexer, parser, AST, and analysis.
+- `forgels-lang-noir`: Noir only: stub lexer and parser. Real grammar is planned.
+- `forgels-lint`: shared lint engine: stable rule IDs, per-rule levels, severity mapping, runner, reporter, and safe-fix support. `fls check` runs through its runner; server diagnostics share its rule IDs and severity mapping.
+
+## Why this shape
+
+Each language defines its own `SyntaxKind`, nodes, and grammar on top of the shared traits, so common behavior (spans for diagnostics, error recovery, traversal) is implemented once instead of copied per language. The protocol crate stays free of language logic so the wire format can evolve without touching analysis. The binary stays thin so new entrypoints (like `check` next to `lsp`) compose existing pieces instead of duplicating them.
+
+## Cross-file model
+
+`forgels-core` keeps a `ProjectIndex` with forward file edges and reverse dependent edges. Opening or changing a file refreshes the index and marks dependents dirty, so diagnostics republish across imports. Import specifiers resolve lexically (`./`, `../`) plus Foundry-style prefix remappings, longest prefix first. The dep read cap is 16 files and republish fan-out caps at 32 dependents.
+
+## Adding a language
+
+A new language means a new `forgels-lang-<name>` crate with `LANGUAGE_ID`, `FILE_EXTENSIONS`, and `ast`, `lexer`, `parser` modules implementing the `forgels-syntax` traits, registered in the workspace members and routed by extension. Cairo exists as a directory today but is not wired in yet.
+
+## Further reading
+
+- [CLI reference](/docs/cli): the `fls` entrypoint commands
+- [Lint rules](/docs/rules): the 22 rule IDs the analysis produces
+- [Configuration](/docs/configuration): server keys, log levels, remappings

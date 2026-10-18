@@ -16,5 +16,8 @@ out/
 tsconfig.tsbuildinfo
 *.tsbuildinfo
 
+# firecrawl research artifacts
+.firecrawl/
+
 # system
 .DS_Store

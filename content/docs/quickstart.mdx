@@ -3,9 +3,13 @@ title: Quickstart
 description: Open a Solidity file and verify the language features
 ---
 
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
 This guide assumes [Installation](/docs/installation) is done and your editor points at `forgels` over stdio.
 
-## 1. Create a test file
+<Steps>
+<Step>
+### Create a test file
 
 Save this as `Counter.sol` in an empty folder:
 
@@ -23,23 +27,27 @@ contract Counter {
 ```
 
 Open the folder in your editor, then open `Counter.sol`.
-
-## 2. Check diagnostics
+</Step>
+<Step>
+### Check diagnostics
 
 Delete the semicolon after `total += amount` and wait a moment. You should see an error diagnostic on that line. Undo the edit and confirm the diagnostic clears.
 
 Diagnostics are debounced (200 ms by default) and cleared when the file closes.
-
-## 3. Check hover and goto-definition
+</Step>
+<Step>
+### Check hover and goto-definition
 
 - Hover over `total` inside `add`. You should see its type and declaration info.
 - Put the cursor on `total` and trigger goto-definition. The cursor should jump to the state variable declaration.
-
-## 4. Check completion
+</Step>
+<Step>
+### Check completion
 
 Type `total.` or start typing a known identifier and trigger completion. Contract members, in-scope symbols, and imported symbols (for multi-file projects) are suggested.
-
-## 5. Try a multi-file project
+</Step>
+<Step>
+### Try a multi-file project
 
 Create a second file `Wrapper.sol` importing the first one:
 
@@ -52,6 +60,8 @@ contract Wrapper {
 ```
 
 Hover and goto-definition on `Counter` resolve across files. ForgeLS rebuilds its project index on open and change, and refreshes dependents when an import target edits.
+</Step>
+</Steps>
 
 ## What to read next
 

@@ -1,101 +1,38 @@
+@import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
-/* Minimal landing page styles (no Tailwind in this project) */
-.landing {
-  max-width: 880px;
-  margin: 0 auto;
-  padding: 96px 24px 64px;
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
-.landing .badge {
-  display: inline-block;
-  font-size: 13px;
-  padding: 4px 12px;
-  border: 1px solid var(--fd-border);
-  border-radius: 999px;
-  color: var(--fd-muted-foreground);
-  margin-bottom: 20px;
+/*
+ * ForgeLS palette. Blue sampled from public/logo.png gradient
+ * (sky #5EA9FF at the top to deep #1B4FD8 at the bottom).
+ * Layout and UX mirror better-auth.com; only the palette differs.
+ */
+@theme {
+  --color-fd-primary: #1d4ed8;
+  --color-fd-primary-foreground: #ffffff;
+  --color-fd-ring: #3b82f6;
+  --color-fd-accent: rgba(59, 130, 246, 0.12);
+  --color-fd-accent-foreground: #1e3a8a;
 }
 
-.landing h1 {
-  font-size: 44px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin: 0 0 16px;
-}
-
-.landing p.lead {
-  font-size: 18px;
-  color: var(--fd-muted-foreground);
-  margin: 0 0 32px;
-  max-width: 640px;
-}
-
-.landing .actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 56px;
-}
-
-.landing .btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  text-decoration: none;
-  border: 1px solid var(--fd-border);
-}
-
-.landing .btn-primary {
-  background: var(--fd-primary);
-  color: var(--fd-primary-foreground);
-  border-color: transparent;
-}
-
-.landing .cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.landing .card {
-  border: 1px solid var(--fd-border);
-  border-radius: 12px;
-  padding: 20px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.landing .card h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-}
-
-.landing .card p {
-  margin: 0;
-  font-size: 14px;
-  color: var(--fd-muted-foreground);
-}
-
-.landing pre {
-  border: 1px solid var(--fd-border);
-  border-radius: 12px;
-  padding: 16px 20px;
-  overflow-x: auto;
-  font-size: 14px;
-  margin: 0 0 56px;
-}
-
-.landing .lang-switch {
-  margin-top: 48px;
-  font-size: 14px;
-  color: var(--fd-muted-foreground);
-}
-
-.landing .lang-switch a {
-  color: inherit;
-  margin-right: 12px;
+.dark {
+  --color-fd-background: hsl(222, 47%, 6%);
+  --color-fd-foreground: hsl(213, 31%, 91%);
+  --color-fd-muted: hsl(222, 40%, 11%);
+  --color-fd-popover: hsl(222, 45%, 9%);
+  --color-fd-card: hsl(222, 45%, 8%);
+  --color-fd-card-foreground: hsl(213, 31%, 96%);
+  --color-fd-border: hsla(213, 60%, 60%, 22%);
+  --color-fd-primary: #60a5fa;
+  --color-fd-primary-foreground: #0b1526;
+  --color-fd-secondary: hsl(222, 40%, 13%);
+  --color-fd-secondary-foreground: hsl(213, 31%, 91%);
+  --color-fd-accent: rgba(59, 130, 246, 0.18);
+  --color-fd-accent-foreground: #bfdbfe;
+  --color-fd-ring: #3b82f6;
 }

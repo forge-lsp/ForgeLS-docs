@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "formatter": true,
+  "permission": {
+    "skill": {
+      "*": "allow"
+    }
+  },
+  "agent": {
+    "forge-explorer": {},
+    "forge-planner": {},
+    "forge-executor": {},
+    "forge-qa": {}
+  }
+}
